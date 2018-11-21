@@ -21,7 +21,7 @@ type Order struct {
 	OrderTimestamp          Time   `json:"order_timestamp"`
 	ExchangeUpdateTimestamp Time   `json:"exchange_update_timestamp"`
 	ExchangeTimestamp       Time   `json:"exchange_timestamp"`
-	Meta                    string `json:"meta"`
+	Meta                    string `json:"tag"`
 	RejectedBy              string `json:"rejected_by"`
 	Variety                 string `json:"variety"`
 
@@ -165,7 +165,7 @@ func (c *Client) CancelOrder(variety string, orderID string, parentOrderID *stri
 		params.Add("parent_order_id", *parentOrderID)
 	}
 
-	err := c.doEnvelope(http.MethodPut, fmt.Sprintf(URICancelOrder, variety, orderID), params, nil, &orderResponse)
+	err := c.doEnvelope(http.MethodDelete, fmt.Sprintf(URICancelOrder, variety, orderID), params, nil, &orderResponse)
 	return orderResponse, err
 }
 
